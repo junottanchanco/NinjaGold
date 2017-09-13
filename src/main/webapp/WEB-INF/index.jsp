@@ -1,5 +1,7 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Collections"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -43,8 +45,18 @@
 		</fieldset>
 	</form><br>
 	<h1>Activities:</h1>
-	<fieldset style="width: 700px; height: 150px; border: solid;">
-		<c:out value="${activities}"/>
+	<fieldset style="width: 700px; height: 150px; border: solid; overflow: scroll;">
+		<ul>
+          <% ArrayList<String> activities = (ArrayList<String>) session.getAttribute("activities");
+			Collections.reverse(activities);
+          for(String activity : activities) {
+			if(activity.toLowerCase().contains("lost".toLowerCase())) {%>
+				<li class="red"><%= activity %></li>
+			<% }else{ %>
+				<li class="green"><%= activity %></li>
+			<% }
+		} %>
+          </ul>
 	</fieldset>
 </body>
 </html>
